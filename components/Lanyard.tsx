@@ -1,7 +1,8 @@
 /* eslint-disable react/no-unknown-property */
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { Canvas, extend, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
+import './meshlines.ts'
 import { useGLTF, useTexture, Environment, Lightformer } from '@react-three/drei';
 import {
   BallCollider,
@@ -12,15 +13,21 @@ import {
   useSphericalJoint,
   RigidBodyProps
 } from '@react-three/rapier';
-import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 import * as THREE from 'three';
 import CurvedLoop from './CurvedLoop';
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      meshLineGeometry: any;
+      meshLineMaterial: any;
+    }
+  }
+}
 
 // replace with your own imports, see the usage snippet for details
 const cardGLB = '/card.glb';
 const lanyard = '/lanyard.png';
-
-extend({ MeshLineGeometry, MeshLineMaterial });
 
 interface LanyardProps {
   position?: [number, number, number];
@@ -265,7 +272,9 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
         </RigidBody>
       </group>
       <mesh ref={band}>
+        {/* @ts-expect-error meshline JSX element */}
         <meshLineGeometry />
+        {/* @ts-expect-error meshline JSX element */}
         <meshLineMaterial
           color="white"
           depthTest={false}
