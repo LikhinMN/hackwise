@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unknown-property */
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import './meshlines.ts'
+import { Canvas, useFrame, extend } from '@react-three/fiber';
+import { MeshLine, MeshLineMaterial, MeshLineGeometry } from 'three.meshline';
 import { useGLTF, useTexture, Environment, Lightformer } from '@react-three/drei';
 import {
   BallCollider,
@@ -16,11 +16,14 @@ import {
 import * as THREE from 'three';
 import CurvedLoop from './CurvedLoop';
 
+extend({ MeshLine, MeshLineMaterial, MeshLineGeometry });
+
 declare global {
   namespace JSX {
     interface IntrinsicElements {
       meshLineGeometry: any;
       meshLineMaterial: any;
+      meshLine: any;
     }
   }
 }
